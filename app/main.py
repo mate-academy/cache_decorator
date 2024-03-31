@@ -16,5 +16,4 @@ def cache(func: Callable) -> Callable:
             cache[arguments] = func(*args, **kwargs)
             return cache[arguments]
 
-
     return wrapper
