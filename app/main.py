@@ -9,7 +9,7 @@ def cache(func: Callable) -> Callable:
         print("Getting from cache" if key in cached_results
               else "Calculating new result")
 
-        return cached_results[key] if key in cached_results \
-            else cached_results.setdefault(key, func(*args, **kwargs))
+        return (cached_results[key] if key in cached_results
+                else cached_results.setdefault(key, func(*args, **kwargs)))
 
     return wrapper
