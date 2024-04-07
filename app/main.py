@@ -2,20 +2,14 @@ from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
-    completed_runs = []
+    completed_runs = {}
 
-    def wrapper(*args, **kwargs) -> Any:
-        if completed_runs:
-            for run in completed_runs:
-                if run["arguments"] == (args, kwargs):
-                    print("Getting from cache")
-                    return run["result"]
-        new_run = {
-            "arguments": (args, kwargs),
-            "result": func(*args, **kwargs)
-        }
-        completed_runs.append(new_run)
+    def wrapper(*args) -> Any:
+        if args in completed_runs:
+            print("Getting from cache")
+            return completed_runs[args]
+        completed_runs[args] = func(*args)
         print("Calculating new result")
-        return new_run["result"]
+        return completed_runs[args]
 
     return wrapper
