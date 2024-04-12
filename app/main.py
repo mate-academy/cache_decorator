@@ -2,15 +2,15 @@ from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
-    history_def = {}
+    log = {}
 
-    def wrapper(*args: Any) -> Callable:
-        if args not in history_def:
+    def inner(*args: Any) -> Callable:
+        if args not in log:
             print("Calculating new result")
-            history_def[args] = func(*args)
-            return history_def[args]
+            log[args] = func(*args)
+            return log[args]
+        else:
+            print("Getting from cache")
+            return log[args]
 
-        print("Getting from cache")
-        return history_def[args]
-
-    return wrapper
+    return inner
