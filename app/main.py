@@ -4,12 +4,13 @@ from typing import Callable, Any
 def cache(func: Callable) -> Callable:
     completed_runs = {}
 
-    def wrapper(*args) -> Any:
-        if args in completed_runs:
+    def wrapper(*args, **kwargs) -> Any:
+        arguments = (args, tuple(kwargs.items()))
+        if arguments in completed_runs:
             print("Getting from cache")
-            return completed_runs[args]
-        completed_runs[args] = func(*args)
+            return completed_runs[arguments]
+        completed_runs[arguments] = func(*args, **kwargs)
         print("Calculating new result")
-        return completed_runs[args]
+        return completed_runs[arguments]
 
     return wrapper
