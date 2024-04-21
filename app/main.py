@@ -1,10 +1,11 @@
 from typing import Callable, Any
-
+import functools
 
 
 def cache(func: Callable) -> Callable:
     dict_cache = {}
 
+    @functools.wraps(func)
     def wraps(*args, **kwargs) -> Any:
         inner_args = (args, tuple(kwargs.items()))
         if inner_args in dict_cache.keys():
