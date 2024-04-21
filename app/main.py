@@ -1,13 +1,12 @@
-from typing import Callable
-import functools
+from typing import Callable, Any
+
 
 
 def cache(func: Callable) -> Callable:
     dict_cache = {}
 
-    @functools.wraps(func)
-    def wraps(*args, **kwargs) -> tuple:
-        inner_args = args
+    def wraps(*args, **kwargs) -> Any:
+        inner_args = (args, tuple(kwargs.items()))
         if inner_args in dict_cache.keys():
             print("Getting from cache")
             return dict_cache[inner_args]
