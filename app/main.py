@@ -5,7 +5,7 @@ def cache(func: Callable) -> Callable:
     cache_dict = {}
 
     def inner(*args, **kwargs) -> Callable:
-        dict_key = (*args, frozenset(kwargs.items()))
+        dict_key = (*args, tuple(kwargs.items()))
 
         if dict_key in cache_dict:
             print("Getting from cache")
