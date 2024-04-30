@@ -2,18 +2,16 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    cache_arguments: list = []
-    cache_results: list = []
+    cache_storage: dict = {}
 
     def internal(*args, **kwargs) -> Callable:
         argument_list: list = [args, kwargs]
-        for entry_index in range(len(cache_arguments)):
-            if argument_list == cache_arguments[entry_index]:
+        for cached_result, cached_arguments in cache_storage.items():
+            if argument_list == cached_arguments:
                 print("Getting from cache")
-                return cache_results[entry_index]
+                return cached_result
         print("Calculating new result")
         result = func(*args, **kwargs)
-        cache_arguments.append(argument_list)
-        cache_results.append(result)
+        cache_storage[result] = argument_list
         return result
     return internal
