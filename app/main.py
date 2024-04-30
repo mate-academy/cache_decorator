@@ -4,14 +4,14 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     cache_storage: dict = {}
 
-    def internal(*args, **kwargs) -> Callable:
-        argument_list: list = [args, kwargs]
-        for cached_result, cached_arguments in cache_storage.items():
-            if argument_list == cached_arguments:
+    def internal(*args) -> Callable:
+        current_arguments: tuple = args
+        for cached_arguments in cache_storage.keys():
+            if current_arguments == cached_arguments:
                 print("Getting from cache")
-                return cached_result
+                return cache_storage[cached_arguments]
         print("Calculating new result")
-        result = func(*args, **kwargs)
-        cache_storage[result] = argument_list
+        result = func(*args)
+        cache_storage[current_arguments] = result
         return result
     return internal
