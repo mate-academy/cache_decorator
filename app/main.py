@@ -11,6 +11,5 @@ def cache(func: Callable) -> Callable:
         else:
             print("Calculating new result")
             cache_store[key] = func(*args, **kwargs)
-            return cache_store[key]
         return cache_store[key]
     return inner
