@@ -1,9 +1,11 @@
+import functools
 from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
     cached_results = {}
 
+    @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Callable:
         key = (args, frozenset(kwargs.items()))
         if key not in cached_results:
@@ -14,3 +16,4 @@ def cache(func: Callable) -> Callable:
         return cached_results[key]
 
     return wrapper
+
