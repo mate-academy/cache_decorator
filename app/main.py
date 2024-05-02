@@ -18,8 +18,8 @@ def cache(func: Callable) -> Callable:
 
 
 @cache
-def long_time_func(first_value: int, second_value: int, third_value: int) -> int:
-    return (first_value ** second_value ** third_value) % (first_value * third_value)
+def long_time_func(value_1st: int, value_2nd: int, value_3rd: int) -> int:
+    return (value_1st ** value_2nd ** value_3rd) % (value_1st * value_3rd)
 
 
 @cache
