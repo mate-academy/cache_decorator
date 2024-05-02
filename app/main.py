@@ -6,10 +6,9 @@ def cache(func: Callable) -> Callable:
 
     def internal(*args, **kwargs) -> Callable:
         current_arguments: tuple = (args, tuple(kwargs.items()))
-        for cached_arguments in cache_storage.keys():
-            if current_arguments == cached_arguments:
-                print("Getting from cache")
-                return cache_storage[cached_arguments]
+        if current_arguments in cache_storage:
+            print("Getting from cache")
+            return cache_storage[current_arguments]
         print("Calculating new result")
         result = func(*args, **kwargs)
         cache_storage[current_arguments] = result
