@@ -10,6 +10,9 @@ def cache(func: Callable) -> Callable:
         if args not in results:
             results[args] = func(*args, **kwargs)
             print("Calculating new result")
+        elif kwargs and kwargs not in results:
+            results[kwargs] = func(*args, **kwargs)
+            print("Calculating new result")
         else:
             print("Getting from cache")
         return results[args]
