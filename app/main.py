@@ -7,7 +7,7 @@ def cache(func: Callable) -> Callable:
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Callable:
-        key = args + tuple(kwargs.keys())
+        key = args + tuple(kwargs.items())
         if key not in results:
             results[key] = func(*args, **kwargs)
             print("Calculating new result")
