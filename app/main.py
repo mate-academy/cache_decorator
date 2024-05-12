@@ -3,7 +3,7 @@ _cache = {}
 
 
 def cache(func: Callable) -> Callable:
-    def wrapper(*args):
+    def wrapper(*args) -> int:
         if func not in _cache:
             _cache[func] = {}
         if args not in _cache[func]:
