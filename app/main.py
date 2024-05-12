@@ -1,6 +1,7 @@
 from typing import Callable
 _cache = {}
 
+
 def cache(func: Callable) -> Callable:
     def wrapper(*args):
         if func not in _cache:
