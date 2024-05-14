@@ -1,16 +1,16 @@
 from typing import Callable
-_cache = {}
+_CACHE = {}
 
 
 def cache(func: Callable) -> Callable:
-    def wrapper(*args) -> int:
-        if func not in _cache:
-            _cache[func] = {}
-        if args not in _cache[func]:
+    def wrapper(*args: int) -> int:
+        if func not in _CACHE:
+            _CACHE[func] = {}
+        if args not in _CACHE[func]:
+            _CACHE[func][args] = func(*args)
             print("Calculating new result")
-            _cache[func][args] = func(*args)
         else:
             print("Getting from cache")
-
-        return _cache[func][args]
+    
+        return _CACHE[func][args]
     return wrapper
