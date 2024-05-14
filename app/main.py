@@ -11,6 +11,5 @@ def cache(func: Callable) -> Callable:
             print("Calculating new result")
         else:
             print("Getting from cache")
-    
         return _CACHE[func][args]
     return wrapper
