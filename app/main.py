@@ -10,7 +10,7 @@ def cache(func: Callable) -> Callable:
         kwargs_name = str(kwargs)
         return f"{func_name} {arg_name} {kwargs_name}"
 
-    def wrapper(*arg, **kwargs):
+    def wrapper(*arg, **kwargs) -> Callable:
         key = generate_key(*arg, **kwargs)
 
         if results.get(key) is not None:
