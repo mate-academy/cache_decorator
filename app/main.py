@@ -1,10 +1,10 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     cache_dict = {}
 
-    def wrapper(*args, **kwargs) -> int:
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         key = (args, frozenset(kwargs.items()))
         if key not in cache_dict:
             print("Calculating new result")
