@@ -1,15 +1,18 @@
+import functools
 from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     storage = {}
 
+    @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Any:
-        if args in storage:
+        arguments = f"{args}{kwargs}"
+        if arguments in storage:
             print("Getting from cache")
-            return storage.get(args)
+            return storage[arguments]
         print("Calculating new result")
         result = func(*args, **kwargs)
-        storage[args] = result
-        return storage.get(args)
+        storage[arguments] = result
+        return result
     return wrapper
