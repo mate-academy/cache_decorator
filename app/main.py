@@ -8,10 +8,10 @@ def cache(func: Callable) -> Callable:
     def wrapper(*args) -> Any:
         if args in seve_res:
             print("Getting from cache")
-            return seve_res[args]
+            res = seve_res[args]
         else:
             res = func(*args)
             seve_res[args] = res
             print("Calculating new result")
-            return res
+        return res
     return wrapper
