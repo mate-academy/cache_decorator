@@ -3,16 +3,17 @@ from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    seve_res = {}
+    arguments = {}
 
     @wraps(func)
     def wrapper(*args, **kwargs) -> Any:
-        if args in seve_res:
+        key_string = str(args) + str(kwargs)
+        if key_string in arguments:
             print("Getting from cache")
-            res = seve_res[args]
+            result = arguments[key_string]
         else:
-            res = func(*args, **kwargs)
-            seve_res[args] = res
+            result = func(*args, **kwargs)
+            arguments[key_string] = result
             print("Calculating new result")
-        return res
+        return result
     return wrapper
