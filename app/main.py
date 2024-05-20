@@ -1,4 +1,4 @@
-from typing import Callable, Any, Iterable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
