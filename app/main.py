@@ -2,5 +2,13 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    # Write your code here
-    pass
+    cash = {}
+
+    def inner(*args) -> Callable:
+        if args not in cash:
+            print("Calculating new result")
+            cash[args] = func(*args)
+        else:
+            print("Getting from cache")
+        return cash[args]
+    return inner
