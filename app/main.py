@@ -1,16 +1,15 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
-    cached = {}
+    cache_storage = {}
 
-    def inner(*args, **kwargs) -> Callable:
-        key = f"{func.__name__} {str(args)} {str(kwargs)}"
-        if cached.get(key) is None:
-            print("Calculating new result")
-            result = func(*args, **kwargs)
-            cached[key] = result
-            return result
-        print("Getting from cache")
-        return cached[key]
+    def inner(*args) -> Any:
+        if args in cache_storage:
+            print("Getting from cache")
+            return cache_storage[args]
+        result = func(*args)
+        cache_storage[args] = result
+        print("Calculating new result")
+        return result
     return inner
