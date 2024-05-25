@@ -10,10 +10,12 @@ def cache(func: Callable) -> Callable:
             args_tuple = tuple(args)
             if args_tuple not in result_list:
                 print("Calculating new result")
-                result = func(args)
+                result = func(*args)
                 result_list.extend([args_tuple, result])
                 return result
             else:
                 print("Getting from cache")
                 return result_list[result_list.index(args_tuple) + 1]
+        else:
+            return func(*args)
     return wrapper
