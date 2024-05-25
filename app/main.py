@@ -10,10 +10,8 @@ def cache(func: Callable) -> Callable:
         key = args, frozenset(kwargs)
         if key in result_dict:
             print("Getting from cache")
-            return result_dict[key]
         else:
             print("Calculating new result")
-            result = func(*args)
-            result_dict[key] = result
-            return result
+            result_dict[key] = func(*args)
+        return result_dict[key]
     return wrapper
