@@ -1,16 +1,16 @@
-from typing import Callable
-
-cache_dict = {}
+from typing import Callable, Any
+from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    def inner(*args, **kwargs) -> int:
-        global cache_dict
+    cache_dict = {}
+
+    @wraps(func)
+    def inner(*args, **kwargs) -> Any:
         if (func, args) in cache_dict:
             print("Getting from cache")
             return cache_dict[(func, args)]
-        else:
-            print("Calculating new result")
-            cache_dict[(func, args)] = func(*args, **kwargs)
-            return cache_dict[(func, args)]
+        print("Calculating new result")
+        cache_dict[(func, args)] = func(*args, **kwargs)
+        return cache_dict[(func, args)]
     return inner
