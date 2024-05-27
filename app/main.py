@@ -7,10 +7,11 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def inner(*args, **kwargs) -> Any:
-        if (func, args) in cache_dict:
+        key = func.__name__, args, tuple(kwargs)
+        if key in cache_dict:
             print("Getting from cache")
-            return cache_dict[(func, args)]
+            return cache_dict[key]
         print("Calculating new result")
-        cache_dict[(func, args)] = func(*args, **kwargs)
-        return cache_dict[(func, args)]
+        cache_dict[key] = func(*args, **kwargs)
+        return cache_dict[key]
     return inner
