@@ -7,11 +7,7 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def inner(*args, **kwargs) -> Any:
-        # Checking for Immutability
         key = func.__name__, args, tuple(kwargs.items())
-        if any(isinstance(arg, (list, dict, set)) for arg in args) or \
-           any(isinstance(arg, (list, dict, set)) for arg in kwargs.values()):
-            raise TypeError("All arguments must be immutable")
 
         if key in cache_storage:
             print("Getting from cache")
