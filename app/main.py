@@ -2,22 +2,20 @@ from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
-    cache_of_results = []
-    cache_of_args = []
+    cache_of_results = {}
 
     def wrapper(*args, **kwargs) -> Any:
         nonlocal cache_of_results
-        nonlocal cache_of_args
 
-        total_args = args + tuple(kwargs.values())
-        if total_args in cache_of_args:
+        keys = args + tuple(kwargs.items())
+
+        if keys in cache_of_results:
             print("Getting from cache")
-            return cache_of_results[cache_of_args.index(total_args)]
+
         else:
             print("Calculating new result")
-            cache_of_results.append(func(*args, **kwargs))
-            cache_of_args.append(args + tuple(kwargs.values()))
+            cache_of_results[keys] = func(*args, **kwargs)
 
-        return cache_of_results[-1]
+        return cache_of_results[keys]
 
     return wrapper
