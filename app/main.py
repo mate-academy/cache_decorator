@@ -8,6 +8,7 @@ def cache(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args, **kwargs) -> Callable:
         keys = (args, *kwargs.items())
+
         if keys in storage_cache:
             print("Getting from cache")
             return storage_cache[keys]
@@ -16,4 +17,5 @@ def cache(func: Callable) -> Callable:
         result = func(*args, **kwargs)
         storage_cache[keys] = result
         return result
+
     return wrapper
