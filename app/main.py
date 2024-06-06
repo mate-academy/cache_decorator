@@ -8,16 +8,12 @@ def cache(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args, **kwargs) -> Callable:
         keys = (args, *kwargs.items())
-
-        if func not in storage_cache:
-            storage_cache[func] = {}
-
-        if keys in storage_cache[func]:
+        if keys in storage_cache:
             print("Getting from cache")
-            return storage_cache[func][keys]
+            return storage_cache[keys]
 
         print("Calculating new result")
         result = func(*args, **kwargs)
-        storage_cache[func][keys] = result
+        storage_cache[keys] = result
         return result
     return wrapper
