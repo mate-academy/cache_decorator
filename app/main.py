@@ -1,16 +1,19 @@
 from typing import Callable
+from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    cah = {}
+    storage_cache = {}
 
-    def warp(*args) -> int:
-        if args in cah:
+    @wraps(func)
+    def warp(*args, **kwargs) -> Callable:
+        hash_key = (args, frozenset(kwargs.items()))
+        if hash_key in storage_cache:
             print("Getting from cache")
-            return cah[args]
+            return storage_cache[hash_key]
         else:
-            result = func(*args)
-            cah[args] = result
+            result = func(*args, **kwargs)
+            storage_cache[hash_key] = result
             print("Calculating new result")
             return result
 
