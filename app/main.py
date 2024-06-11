@@ -5,6 +5,7 @@ from collections import defaultdict
 
 def cache(func: Callable) -> Callable:
     func_cache = defaultdict(dict)
+
     @wraps(func)
     def wrapper(*args):
         if args in func_cache[func]:
@@ -22,6 +23,7 @@ def cache(func: Callable) -> Callable:
 @cache
 def long_time_func(a: int, b: int, c: int) -> int:
     return (a ** b ** c) % (a * c)
+
 
 @cache
 def long_time_func_2(n_tuple: tuple, power: int) -> int:
