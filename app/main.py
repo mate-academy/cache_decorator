@@ -12,7 +12,6 @@ def cache(func: Callable) -> Callable:
             return unique_values[args]
         else:
             print("Calculating new result")
-            result = func(*args)
-            unique_values[args] = result
-            return result
+            unique_values[args] = func(*args)
+        return unique_values[args]
     return inner
