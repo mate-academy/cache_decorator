@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Callable
 
-# Dictionary to store cached results for different functions
 cached_results = {}
+
 
 def cache(func: Callable) -> Callable:
     @wraps(func)
