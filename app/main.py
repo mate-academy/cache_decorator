@@ -1,5 +1,4 @@
 from typing import Callable, Any
-import time
 
 
 def cache(func: Callable) -> Callable:
