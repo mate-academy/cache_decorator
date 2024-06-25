@@ -7,8 +7,8 @@ def cache(func: Callable) -> Callable:
     cache should print "Getting from cache" when returns stored value
     and "Calculating new result" when run function with new arguments.
 
-    structure for DB_cache:
-        db_cache =
+    structure for cache:
+        cache_data =
         {   "function's name1":
                 {   (tuple1 of arguments): result1,
                     (tuple2 of arguments): result2,
@@ -19,37 +19,26 @@ def cache(func: Callable) -> Callable:
             "function's nameN": {...}
         }
     """
-    # 0. initialise DB_cache
-    db_cache = {}
+    cache_data = {}
 
     def wrapper(*func_args, **kwargs) -> Any:
-        # 1. check for immutable arguments, if not return func without caching
         mutable_tuple = (list, dict, set)
         if any([isinstance(arg, mutable_tuple) for arg in func_args]):
             print("Calculating new result")
             return func(*func_args, **kwargs)
 
-        # 2. there are only immutable arguments - work with DB_cache
-
-        # 3. find in DB_cache function's name and tuple of arguments
-        # 3.1. find if function's name is in DB_cache
-        if str(func) in db_cache:
-            # 3.2 if tuple of arguments exist in DB_cache -
-            # return result from cache
-            if func_args in db_cache[str(func)]:
+        function_name = str(func)
+        if function_name in cache_data:
+            if func_args in cache_data[function_name]:
                 print("Getting from cache")
-                return db_cache[str(func)][func_args]
+                return cache_data[function_name][func_args]
 
-        # 4. tuple of argument doesn't exist in DB_cache
-        # 4.1. check if function's name exist in DB_cache, if not - create it
-        if str(func) not in db_cache:
-            db_cache[str(func)] = {}
+        if function_name not in cache_data:
+            cache_data[function_name] = {}
 
-        # 4.2. if tuple of argument doesn't exist in DB_cache -
-        # do new calculate and save the result to DB_cache
-        db_cache[str(func)][func_args] = func(*func_args, **kwargs)
+        cache_data[function_name][func_args] = func(*func_args, **kwargs)
         print("Calculating new result")
 
-        return db_cache[str(func)][func_args]
+        return cache_data[function_name][func_args]
 
     return wrapper
