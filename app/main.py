@@ -32,13 +32,11 @@ def cache(func: Callable) -> Callable:
             if func_args in cache_data[function_name]:
                 print("Getting from cache")
                 return cache_data[function_name][func_args]
-
-        if function_name not in cache_data:
+        else:
             cache_data[function_name] = {}
 
         cache_data[function_name][func_args] = func(*func_args, **kwargs)
         print("Calculating new result")
-
         return cache_data[function_name][func_args]
 
     return wrapper
