@@ -22,12 +22,8 @@ def cache(func: Callable) -> Callable:
     cache_data = {}
 
     def wrapper(*func_args, **kwargs) -> Any:
-        mutable_tuple = (list, dict, set)
-        if any([isinstance(arg, mutable_tuple) for arg in func_args]):
-            print("Calculating new result")
-            return func(*func_args, **kwargs)
-
         function_name = str(func)
+
         if function_name in cache_data:
             if func_args in cache_data[function_name]:
                 print("Getting from cache")
@@ -35,8 +31,13 @@ def cache(func: Callable) -> Callable:
         else:
             cache_data[function_name] = {}
 
-        cache_data[function_name][func_args] = func(*func_args, **kwargs)
+        func_result = func(*func_args, **kwargs)
+        is_mutable_args = any(
+            [isinstance(arg, (list, dict, set)) for arg in func_args])
+        if not is_mutable_args:
+            cache_data[function_name][func_args] = func_result
+
         print("Calculating new result")
-        return cache_data[function_name][func_args]
+        return func_result
 
     return wrapper
