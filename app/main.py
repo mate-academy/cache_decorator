@@ -1,16 +1,16 @@
 from typing import Callable
 
-saved_runs = {}
-
 
 def cache(func: Callable) -> Callable:
-    def arg_saver(*argv, **argc) -> callable:
-        arg = str(argv) + str(argc) + str(func)
+    saved_runs = {}
+
+    def arg_saver(*args, **kwargs) -> callable:
+        arg = str(args) + str(kwargs)
         if arg in saved_runs:
             print("Getting from cache")
             return saved_runs[arg]
         else:
-            result = func(*argv, **argc)
+            result = func(*args, **kwargs)
             saved_runs.update({arg: result})
             print("Calculating new result")
             return result
