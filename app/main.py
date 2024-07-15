@@ -6,11 +6,11 @@ def cache(func: Callable) -> Callable:
 
     def wrapper(*args) -> int:
         key = (func.__name__, args)
-        if key not in results:
-            print("Calculating new result")
-            results[key] = func(*args)
-        else:
+        if key in results:
             print("Getting from cache")
+            return results.get(key)
+        print("Calculating new result")
+        results[key] = func(*args)
         return results.get(key)
 
     return wrapper
