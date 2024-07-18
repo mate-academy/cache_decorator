@@ -1,19 +1,19 @@
 from typing import Callable, Any
+import functools
 
 
 def cache(func: Callable) -> Callable:
     former_functions = {}
 
+    @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Any:
-        nonlocal former_functions
-        values = tuple([value for value in kwargs.values()])
-        arguments = (*args, *values)
-        if (arguments, func) in former_functions:
+        key = (func.__name__, args, frozenset(kwargs.items(),))
+        if key in former_functions:
             print("Getting from cache")
-            return former_functions[(arguments, func)]
+            return former_functions[key]
         else:
             print("Calculating new result")
-            former_functions[(arguments, func)] = func(*args, **kwargs)
-            return former_functions[(arguments, func)]
+            former_functions[key] = func(*args, **kwargs)
+            return former_functions[key]
 
     return wrapper
