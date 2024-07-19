@@ -1,13 +1,14 @@
 from typing import Callable, Any
 from functools import wraps
 
-cached_data = {}
+
+def clear_cache() -> None:
+    cached_data.clear()
 
 
 def cache(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args) -> Callable:
-
         if func.__name__ in cached_data:
             if args in cached_data[func.__name__]:
                 print("Getting from cache")
@@ -25,3 +26,6 @@ def cache(func: Callable) -> Callable:
         return new_data
 
     return wrapper
+
+
+cached_data = {}
