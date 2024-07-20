@@ -2,11 +2,9 @@ from typing import Callable
 from functools import wraps
 
 
-def clear_cache() -> None:
-    cached_data.clear()
-
-
 def cache(func: Callable) -> Callable:
+    cached_data = {}
+
     @wraps(func)
     def wrapper(*args) -> Callable:
         if func.__name__ in cached_data:
@@ -21,6 +19,3 @@ def cache(func: Callable) -> Callable:
         return cached_data[func.__name__][args]
 
     return wrapper
-
-
-cached_data = {}
