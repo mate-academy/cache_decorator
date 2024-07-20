@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable
 from functools import wraps
 
 
@@ -13,17 +13,12 @@ def cache(func: Callable) -> Callable:
             if args in cached_data[func.__name__]:
                 print("Getting from cache")
                 return cached_data[func.__name__][args]
-            else:
-                return calc_data(*args)
+        else:
+            cached_data[func.__name__] = {}
 
-        cached_data[func.__name__] = {}
-        return calc_data(*args)
-
-    def calc_data(*args) -> Any:
         print("Calculating new result")
-        new_data = func(*args)
-        cached_data[func.__name__][args] = new_data
-        return new_data
+        cached_data[func.__name__][args] = func(*args)
+        return cached_data[func.__name__][args]
 
     return wrapper
 
