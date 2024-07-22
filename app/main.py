@@ -7,14 +7,12 @@ def cache(func: Callable) -> Callable:
 
     def inner_checker(*args) -> str:
 
-        key = args
-        if key in results_storage:
+        if args in results_storage:
             print("Getting from cache")
-            return results_storage[key]
+            return results_storage[args]
         else:
             print("Calculating new result")
-            value = func(*args)
-            results_storage[key] = value
-            return value
+            results_storage[key] = func(*args)
+        return results_storage[key]
 
     return inner_checker
