@@ -12,7 +12,7 @@ def cache(func: Callable) -> Callable:
         else:
             print("Calculating new result")
             results_storage[args] = func(*args)
-            
+
         return results_storage[args]
 
     return inner_checker
