@@ -2,7 +2,7 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    data_base: dict[tuple, any] = {}
+    data_base = {}
 
     def wrapper(*args, **kwargs) -> any:
         key = (args, tuple(kwargs.items()))
