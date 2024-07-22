@@ -7,13 +7,13 @@ def cache(func: Callable) -> Callable:
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Any:
-        key = (func.__name__, args, frozenset(kwargs.items()))
-        if key in stored_data:
+        cache_key = (func.__name__, args, frozenset(kwargs.items()))
+        if cache_key in stored_data:
             print("Getting from cache")
-            return stored_data[key]
+        else:
+            print("Calculating new result")
+            stored_data[cache_key] = func(*args, **kwargs)
 
-        print("Calculating new result")
-        stored_data[key] = func(*args, **kwargs)
-        return stored_data[key]
+        return stored_data[cache_key]
 
     return wrapper
