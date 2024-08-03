@@ -11,6 +11,6 @@ def cache(func: Callable) -> Callable:
         else:
             result = func(*args, **kwargs)
             runs[args] = result
-            print("Calculating new result)
+            print("Calculating new result")
             return result
     return wrapper
