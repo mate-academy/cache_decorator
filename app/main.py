@@ -4,19 +4,14 @@ from functools import wraps
 
 def cache(func: Callable) -> Callable:
     runs = {}
-    name = None
 
     @wraps(func)
     def wrapper(*args, **kwargs) -> int:
-        nonlocal name
-        arguments = (args, frozenset(kwargs.items()))
-        if arguments in runs and name == func.__name__:
+        key = (args, frozenset(kwargs.items()), func.__name__,)
+        if key in runs:
             print("Getting from cache")
         else:
-            name = func.__name__
-            result = func(*args, **kwargs)
-            runs[arguments] = result
+            runs[key] = func(*args, **kwargs)
             print("Calculating new result")
-        return runs[arguments]
-
+        return runs[key]
     return wrapper
