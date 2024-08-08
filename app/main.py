@@ -9,10 +9,9 @@ def cache(func: Callable) -> Callable:
         checked = (args, checked_kwargs)
         if checked in stored_kwargs:
             print("Getting from cache")
-            return stored_kwargs[checked]
         else:
             print("Calculating new result")
             stored_kwargs[checked] = func(*args, **kwargs)
-            return stored_kwargs[checked]
+        return stored_kwargs[checked]
 
     return stored
