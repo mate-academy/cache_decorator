@@ -6,15 +6,15 @@ def cache(func: Callable) -> Callable:
     cache_dict = {}
 
     @wraps(func)
-    def inner(*args: tuple) -> Any:
-        nonlocal cache_dict
+    def inner(*args: tuple, **kwargs) -> Any:
+        key = (func.__name__, *args, tuple(kwargs))
 
-        if args in cache_dict.keys():
+        if key in cache_dict.keys():
             print("Getting from cache")
         else:
             print("Calculating new result")
-            cache_dict[args] = func(*args)
+            cache_dict[key] = func(*args)
 
-        return cache_dict[args]
+        return cache_dict[key]
 
     return inner
