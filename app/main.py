@@ -7,7 +7,7 @@ def cache(func: Callable) -> Callable:
     def inner(*args) -> Any:
         if args not in storage:
             print("Calculating new result")
-            func_result = func(args)
+            func_result = func(*args)
             storage[args] = func_result
             return func_result
         else:
