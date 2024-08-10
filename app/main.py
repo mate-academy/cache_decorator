@@ -9,7 +9,7 @@ def cache(func: Callable) -> Callable:
     def inner(*args: tuple, **kwargs) -> Any:
         key = (func.__name__, *args, tuple(kwargs))
 
-        if key in cache_dict.keys():
+        if key in cache_dict:
             print("Getting from cache")
         else:
             print("Calculating new result")
