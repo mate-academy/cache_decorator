@@ -7,7 +7,7 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def inner(*args, **kwargs) -> Any:
-        arguments = args if args else kwargs
+        arguments = args or kwargs
         if arguments not in storage:
             print("Calculating new result")
             func_result = func(*arguments)
