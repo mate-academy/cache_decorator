@@ -1,17 +1,20 @@
 from typing import Callable, Any
+from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
     storage = {}
 
-    def inner(*args) -> Any:
-        if args not in storage:
+    @wraps(func)
+    def inner(*args, **kwargs) -> Any:
+        arguments = args if args else kwargs
+        if arguments not in storage:
             print("Calculating new result")
-            func_result = func(*args)
-            storage[args] = func_result
+            func_result = func(*arguments)
+            storage[arguments] = func_result
             return func_result
         else:
             print("Getting from cache")
-            return storage[args]
+            return storage[arguments]
 
     return inner
