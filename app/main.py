@@ -10,9 +10,9 @@ def cache(func: Callable) -> Callable:
         if not (args in cache_storage):
             cache_storage.update({args: func(*args)})
             print("Calculating new result")
-            return cache_storage.get(args)
         else:
             print("Getting from cache")
-            return cache_storage.get(args)
+
+        return cache_storage.get(args)
 
     return wrapper
