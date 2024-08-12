@@ -2,5 +2,15 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    # Write your code here
-    pass
+    cache_value = {}
+
+    def inner(*args, **kwargs) -> (int, list):
+        if str(args) in cache_value:
+            print("Getting from cache")
+            result = cache_value[str(args)]
+        else:
+            print("Calculating new result")
+            result = func(*args, **kwargs)
+            cache_value[str(args)] = result
+        return result
+    return inner
