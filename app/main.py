@@ -1,9 +1,11 @@
 from typing import Callable
+from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
     results = {}
 
+    @wraps(func)
     def wrapper(*args, **kwargs) -> int:
         key = args + tuple(kwargs.items())
         if key in results:
