@@ -8,7 +8,7 @@ def cache(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args, **kwargs) -> Callable:
         checked_kwargs = tuple(kwargs.items())
-        checked = (args, checked_kwargs)
+        checked = (args, checked_kwargs, func.__name__)
         if checked in stored_kwargs:
             print("Getting from cache")
         else:
