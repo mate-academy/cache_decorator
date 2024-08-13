@@ -4,7 +4,7 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     stored_kwargs = {}
 
-    def stored(*args, **kwargs) -> Callable:
+    def wrapper(*args, **kwargs) -> Callable:
         checked_kwargs = tuple(kwargs.items())
         checked = (args, checked_kwargs)
         if checked in stored_kwargs:
@@ -14,4 +14,4 @@ def cache(func: Callable) -> Callable:
             stored_kwargs[checked] = func(*args, **kwargs)
         return stored_kwargs[checked]
 
-    return stored
+    return wrapper
