@@ -1,9 +1,11 @@
 from typing import Callable
+from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
     stored_kwargs = {}
 
+    @wraps(func)
     def wrapper(*args, **kwargs) -> Callable:
         checked_kwargs = tuple(kwargs.items())
         checked = (args, checked_kwargs)
