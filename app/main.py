@@ -2,13 +2,13 @@ from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
-    cache_list = {}
+    cache_dict = {}
 
-    def inner(*args, **kwargs) -> Any:
-        if args not in cache_list:
-            cache_list[args or kwargs] = func(*args, **kwargs)
+    def inner(*args) -> Any:
+        if args not in cache_dict:
+            cache_dict[args] = func(*args)
             print("Calculating new result")
-            return cache_list[args or kwargs]
+            return cache_dict[args]
         print("Getting from cache")
-        return cache_list[args]
+        return cache_dict[args]
     return inner
