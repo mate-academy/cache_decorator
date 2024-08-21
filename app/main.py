@@ -7,7 +7,7 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def inner(*args, **kwargs) -> Any:
-        key_args = (args, *sorted(kwargs.items()))
+        key_args = (args, *sorted(kwargs.items()), func.__name__)
 
         if key_args not in saved_data:
             saved_data[key_args] = func(*args, **kwargs)
