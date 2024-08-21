@@ -6,13 +6,15 @@ def cache(func: Callable) -> Callable:
     saved_data = {}
 
     @wraps(func)
-    def inner(*args) -> Any:
-        if args not in saved_data:
-            saved_data[args] = func(*args)
+    def inner(*args, **kwargs) -> Any:
+        key_args = (args, *sorted(kwargs.items()))
+
+        if key_args not in saved_data:
+            saved_data[key_args] = func(*args, **kwargs)
             print("Calculating new result")
         else:
             print("Getting from cache")
 
-        return saved_data[args]
+        return saved_data[key_args]
 
     return inner
