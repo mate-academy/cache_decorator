@@ -4,7 +4,6 @@ from typing import Callable, Any
 def cache(func: Callable) -> Any:
     cache_storage = {}
 
-    # use one return
     def wrapper(*args, **kwargs) -> Any:
         key = (args, tuple(sorted(kwargs.items())))
 
@@ -13,8 +12,7 @@ def cache(func: Callable) -> Any:
             return cache_storage[key]
         else:
             print("Calculating new result")
-            result = func(*args, **kwargs)
-            cache_storage[key] = result
-            return result
+            cache_storage[key] = func(*args, **kwargs)
+            return cache_storage[key]
 
     return wrapper
