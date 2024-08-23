@@ -14,7 +14,6 @@ def cache(func: Callable) -> Any:
         else:
             print("Calculating new result")
             cache_storage[key] = func(*args, **kwargs)
-        # one return in wrapper
         return cache_storage[key]
 
     return wrapper
