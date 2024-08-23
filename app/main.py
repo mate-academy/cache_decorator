@@ -4,6 +4,7 @@ from typing import Callable, Any
 def cache(func: Callable) -> Any:
     cache_storage = {}
 
+    # use one return
     def wrapper(*args, **kwargs) -> Any:
         key = (args, tuple(sorted(kwargs.items())))
 
