@@ -19,7 +19,6 @@ def cache(func: Callable) -> Callable:
         # corresponding result and print "Getting from cache".
         if key in result_dict:
             print("Getting from cache")
-            return result_dict[key]
         # If there is no key, we call the function, save the result and
         # print "Calculating new result"
         else:
