@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
@@ -8,7 +8,7 @@ def cache(func: Callable) -> Callable:
     # Create decorator function 'wrapper', which will be responsible for
     # checking the presence the result is in the cache and saving the
     # new result.
-    def wrapper(*args, **kwargs) -> Any:
+    def wrapper(*args, **kwargs) -> object:
         # Generating a cache key:
         # We create a key, which is a tuple of positional arguments args and a
         # tuple of named arguments tuple(kwargs.items()). Using a tuple
