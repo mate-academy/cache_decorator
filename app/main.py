@@ -1,22 +1,17 @@
 from functools import wraps
-from typing import Callable
-from typing import TypeVar
-
-T = TypeVar("T")
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     cache_dict = {}
 
     @wraps(func)
-    def wrapper(*args) -> T:
-        if args in cache_dict:
-            print("Getting from cache")
-            return cache_dict[args]
-        else:
+    def wrapper(*args) -> Any:
+        if args not in cache_dict:
             print("Calculating new result")
-            result = func(*args)
-            cache_dict[args] = result
-            return result
+            cache_dict[args] = func(*args)
+        else:
+            print("Getting from cache")
+        return cache_dict[args]
 
     return wrapper
