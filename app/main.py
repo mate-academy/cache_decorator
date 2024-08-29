@@ -7,7 +7,7 @@ def cache(func: Callable) -> Callable:
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Any:
-        func_hash = (func.__name__, f"{args}{kwargs}")
+        func_hash = (func.__name__, f"{args}{kwargs}")  # Re-commit in PyCharm
         if func_hash not in memory:
             print("Calculating new result")
             memory[func_hash] = func(*args, **kwargs)
