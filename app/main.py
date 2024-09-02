@@ -7,15 +7,15 @@ def cache(func: Callable) -> Callable:
     func_cache: dict[tuple, any] = {}
 
     @wraps(func)
-    def wrapper(*args) -> any:
+    def wrapper(*args, **kwargs) -> any:
         # Use the arguments as the cache key
-        cache_key = args
+        cache_key = (func.__name__, args, tuple(sorted(kwargs.items())))
         if cache_key in func_cache:
             print("Getting from cache")
             return func_cache[cache_key]
         else:
             print("Calculating new result")
-            result = func(*args)
+            result = func(*args, **kwargs)
             func_cache[cache_key] = result
             return result
 
@@ -30,12 +30,3 @@ def long_time_func(number_1: int, number_2: int, number_3: int) -> int:
 @cache
 def long_time_func_2(n_tuple: tuple, power: int) -> list[any]:
     return [number ** power for number in n_tuple]
-
-
-# Testing the functions
-long_time_func(1, 2, 3)  # Should calculate new result
-long_time_func(2, 2, 3)  # Should calculate new result
-long_time_func_2((5, 6, 7), 5)  # Should calculate new result
-long_time_func(1, 2, 3)  # Should get from cache
-long_time_func_2((5, 6, 7), 10)  # Should calculate new result
-long_time_func_2((5, 6, 7), 10)  # Should get from cache
