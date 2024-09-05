@@ -7,14 +7,12 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def wrapper(*args, **kwargs) -> [int, list]:
-        key = (args, frozenset(kwargs.items()))
-        if key in results:
+        key = (args , frozenset(kwargs.items()) , func.__name__)
+        if key in results :
             print("Getting from cache")
-            return results[key]
-        else:
-            result = func(*args, **kwargs)
-            results[key] = result
+        else :
+            results[key] = func(*args , **kwargs)
             print("Calculating new result")
-            return result
+        return results[key]
 
     return wrapper
