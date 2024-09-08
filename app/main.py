@@ -1,16 +1,17 @@
-from typing import Tuple, Any, Callable
+from typing import Tuple, Any, Callable, Dict
+from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    cache_store = {}
+    cache_store: Dict[Tuple, Any] = {}
 
-    def wrapper(*args: Tuple) -> Any:
-        key = (func, args)
-        if key in cache_store:
-            print("Getting from cache")
-        else:
+    @wraps(func)
+    def wrapper(*args: Tuple, **kwargs: Dict) -> Any:
+        key = (func.__name__, args, tuple(sorted(kwargs.items())))
+        if key not in cache_store:
             print("Calculating new result")
-            result = func(*args)
-            cache_store[key] = result
-        return cache_store[key] if key in cache_store else key in cache_store
+            cache_store[key] = func(*args, **kwargs)
+        else:
+            print("Getting from cache")
+        return cache_store[key]
     return wrapper
