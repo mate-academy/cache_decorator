@@ -1,15 +1,16 @@
-from typing import Callable
+from typing import Callable, List, Any
 
 
 def cache(func: Callable) -> Callable:
-    result = []
+    result_list = {}
 
-    def wrapper(*args, **kwargs) -> list:
-        if func(*args, **kwargs) not in result:
-            result.append(func(*args, **kwargs))
-            print("Calculating new result")
-        else:
+    def wrapper(*args) -> Any:
+        result = args
+        if result in result_list:
             print("Getting from cache")
-        return result
+        else:
+            print("Calculating new result")
+            result_list[result] = func(*args)
+        return result_list[args]
 
     return wrapper
