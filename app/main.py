@@ -3,13 +3,16 @@ from typing import Callable
 
 def cache(func: Callable) -> Callable:
 
-    cashe = {}
+    result_storage = {}
 
     def wrapper(*args) -> Callable:
-        if args in cashe:
+        result = None
+        if args in result_storage:
             print("Getting from cache")
-            return cashe[args]
-        print("Calculating new result")
-        cashe[args] = func(*args)
-        return cashe[args]
+            result = result_storage[args]
+        else:
+            print("Calculating new result")
+            result_storage[args] = func(*args)
+            result = result_storage[args]
+        return result
     return wrapper
