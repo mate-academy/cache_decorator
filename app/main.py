@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 import functools
 
 
@@ -7,13 +7,12 @@ def cache(func: Callable) -> Callable:
     decorator_cache = {}
 
     @functools.wraps(func)
-    def wrapper(*args) -> int:
-        if args in decorator_cache:
-            print("Getting from cache")
-            return decorator_cache[args]
-        else:
+    def wrapper(*args, **kwargs) -> Any:
+        args += tuple(kwargs.values())
+        if args not in decorator_cache:
             print("Calculating new result")
-            result = func(*args)
-            decorator_cache[args] = result
-            return result
+            decorator_cache[args] = func(*args, **kwargs)
+        else:
+            print("Getting from cache")
+        return decorator_cache[args]
     return wrapper
