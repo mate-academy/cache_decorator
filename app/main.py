@@ -1,8 +1,11 @@
 from typing import Any, Callable
 from functools import wraps
 
+
 def cache(func: Callable) -> Callable:
+
     data = []
+
     @wraps(func)
     def inner(*args) -> Any:
         data_type = [func, args]
