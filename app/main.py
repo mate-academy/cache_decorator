@@ -9,16 +9,16 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def inner(*args, **kwargs) -> Any:
-        data_type = [args]
-        if func in data and args in data[func]:
+        data_type = [args, kwargs]
+        if func in data and (data_type in data[func]):
             print("Getting from cache")
-            return data[func][data[func].index(args) + 1]
+            return data[func][data[func].index(data_type) + 1]
 
         elif func not in data:
-            data.update({func: data_type})
+            data.update({func: [data_type]})
 
-        elif args not in data[func]:
-            data[func].append(args)
+        elif data_type not in data[func]:
+            data[func].append(data_type)
 
         result = func(*args, **kwargs)
         data[func].append(result)
