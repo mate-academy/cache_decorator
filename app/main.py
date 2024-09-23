@@ -1,17 +1,15 @@
 from typing import Callable, Any
 
-cache_dict = {}
-
 
 def cache(func: Callable) -> Callable:
+    cache_dict = {}
+
     def inner(*args) -> Any:
-        key = (func, args)
-        if key in cache_dict:
+        if args in cache_dict:
             print("Getting from cache")
-            return cache_dict[key]
         else:
             print("Calculating new result")
-            cache_dict[key] = func(*args)
-            return cache_dict[key]
+            cache_dict[args] = func(*args)
+        return cache_dict[args]
 
     return inner
