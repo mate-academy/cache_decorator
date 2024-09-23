@@ -3,16 +3,17 @@ from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    cache = {}
+    cache_dict = {}
 
     @wraps(func)
     def wrapper(*args, **kwargs) -> Any:
-        key = (args, frozenset(kwargs.items()))
-        if key in cache:
+        key = (func.__name__ ,args, frozenset(kwargs.items()))
+        if key in cache_dict:
             print("Getting from cache")
-            return cache[key]
-        print("Calculating new result")
-        result = func(*args, **kwargs)
-        cache[key] = result
+            result = cache_dict[key]
+        else:
+            print("Calculating new result")
+            result = func(*args, **kwargs)
+            cache_dict[key] = result
         return result
     return wrapper
