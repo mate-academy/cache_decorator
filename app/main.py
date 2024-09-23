@@ -1,22 +1,28 @@
 from typing import Any, Callable
+
 from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
 
-    data = []
+    data = {}
 
     @wraps(func)
-    def inner(*args) -> Any:
-        data_type = [func, args]
-        if data_type not in data:
-            data.append(data_type)
-            result = func(*args)
-            data.append(result)
-            print("Calculating new result")
-            return result
-        else:
+    def inner(*args, **kwargs) -> Any:
+        data_type = [args]
+        if func in data and args in data[func]:
             print("Getting from cache")
-            return data[data.index(data_type) + 1]
+            return data[func][data[func].index(args) + 1]
+
+        elif func not in data:
+            data.update({func: data_type})
+
+        elif args not in data[func]:
+            data[func].append(args)
+
+        result = func(*args, **kwargs)
+        data[func].append(result)
+        print("Calculating new result")
+        return result
 
     return inner
