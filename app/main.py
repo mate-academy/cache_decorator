@@ -1,6 +1,18 @@
-from typing import Callable
+from typing import Callable, Any
+from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    # Write your code here
-    pass
+    cache_dict = {}
+
+    @wraps(func)
+    def inner(*args, **kwargs) -> Any:
+        key = (args, tuple(kwargs.items()), func.__name__)
+        if key in cache_dict:
+            print("Getting from cache")
+        else:
+            print("Calculating new result")
+            cache_dict[key] = func(*args, **kwargs)
+        return cache_dict[key]
+
+    return inner
