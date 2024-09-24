@@ -3,7 +3,7 @@ from typing import Callable
 
 def cache(func: Callable) -> Callable:
     # Словник для зберігання результатів, - наш Кеш,
-    # де ключі це аргументи, а значення результат функції
+    # де ключі це аргументи, а значення результат функції.
     cache_dict = {}
 
     def wrapper(*args):
@@ -13,7 +13,7 @@ def cache(func: Callable) -> Callable:
             return cache_dict[args]
         else:
             # Якщо аргументів немає в кеші, обчислюємо новий результат
-            # та зберігаємо його в наш кеш
+            # та зберігаємо його в наш кеш.
             print("Calculating new result")
             result = func(*args)
             cache_dict[args] = result
