@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
@@ -6,7 +6,7 @@ def cache(func: Callable) -> Callable:
     # де ключі це аргументи, а значення результат функції.
     cache_dict = {}
 
-    def wrapper(*args):
+    def wrapper(*args: Any) -> Any:
         # Якщо аргументи вже є в кеші, повертаємо збережений результат
         if args in cache_dict:
             print("Getting from cache")
