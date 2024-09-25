@@ -1,16 +1,18 @@
+from functools import wraps
 from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    cashed_dict = {}
+    cached_dict = {}
 
+    @wraps(func)
     def inner(*args, **kwargs) -> dict:
         key = (args, tuple(kwargs.items()))
-        if key in cashed_dict:
+        if key in cached_dict:
             print("Getting from cache")
         else:
             print("Calculating new result")
             result = func(*args, **kwargs)
-            cashed_dict[key] = result
-        return cashed_dict[key]
+            cached_dict[key] = result
+        return cached_dict[key]
     return inner
