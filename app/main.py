@@ -2,5 +2,13 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    # Write your code here
-    pass
+    cache_memory = {}
+
+    def inner(*args) -> int:
+        if args in cache_memory:
+            print("Getting from cache")
+        else:
+            print("Calculating new result")
+            cache_memory[args] = func(*args)
+        return cache_memory[args]
+    return inner
