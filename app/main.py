@@ -5,11 +5,10 @@ def cache(func: Callable) -> Callable:
     cache_memory = {}
 
     def inner(*args) -> int:
-        key = args
-        if key in cache_memory:
+        if args in cache_memory:
             print("Getting from cache")
         else:
             print("Calculating new result")
-            cache_memory[key] = func(*args)
-        return cache_memory[key]
+            cache_memory[args] = func(*args)
+        return cache_memory[args]
     return inner
