@@ -7,24 +7,26 @@ def cache(func: Callable) -> Callable:
     cache_storage: Dict[str, Dict[Tuple[Any, ...], Any]] = {}
 
     @functools.wraps(func)
-    def wrapper(*args: Tuple[Any, ...]) -> Any:
+    def wrapper(*args: Tuple[Any, ...], **kwargs: Dict[str, Any]) -> Any:
         func_name = func.__name__
+        kwargs_tuple = tuple(sorted(kwargs.items()))
+        cache_key = (args, kwargs_tuple)
 
         # Initialize the cache for this function if it doesn't exist
         if func_name not in cache_storage:
             cache_storage[func_name] = {}
 
         # Check if the arguments are in the cache
-        if args in cache_storage[func_name]:
+        if cache_key in cache_storage[func_name]:
             print("Getting from cache")
-            return cache_storage[func_name][args]
+            return cache_storage[func_name][cache_key]
 
         # Calculate the result since it's not in the cache
         print("Calculating new result")
-        result = func(*args)
+        result = func(*args, **kwargs)
 
         # Store the result in the cache
-        cache_storage[func_name][args] = result
+        cache_storage[func_name][cache_key] = result
         return result
 
     return wrapper
