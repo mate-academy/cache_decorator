@@ -3,36 +3,26 @@ import functools
 
 
 def cache(func: Callable) -> Callable:
-    # Dictionary to store results for different functions
-    cache_storage: Dict[str, Dict[Tuple[Any, ...], Any]] = {}
+    cache_storage: Dict[Any, Any] = {}
 
     @functools.wraps(func)
     def wrapper(*args: Tuple[Any, ...], **kwargs: Dict[str, Any]) -> Any:
-        func_name = func.__name__
         kwargs_tuple = tuple(sorted(kwargs.items()))
-        cache_key = (args, kwargs_tuple)
+        cache_key = (func.__name__, args, kwargs_tuple)
 
-        # Initialize the cache for this function if it doesn't exist
-        if func_name not in cache_storage:
-            cache_storage[func_name] = {}
-
-        # Check if the arguments are in the cache
-        if cache_key in cache_storage[func_name]:
+        if cache_key in cache_storage:
             print("Getting from cache")
-            return cache_storage[func_name][cache_key]
+            return cache_storage[cache_key]
 
-        # Calculate the result since it's not in the cache
         print("Calculating new result")
         result = func(*args, **kwargs)
 
-        # Store the result in the cache
-        cache_storage[func_name][cache_key] = result
+        cache_storage[cache_key] = result
         return result
 
     return wrapper
 
 
-# Example functions for testing
 @cache
 def long_time_func(base: int, exponent: int, modulus: int) -> int:
     return (base ** exponent ** modulus) % (base * modulus)
