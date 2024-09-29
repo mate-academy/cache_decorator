@@ -13,4 +13,5 @@ def cache(func: Callable) -> Callable:
             result = func(*args)
             cache_storage[args] = result
             return result
+
     return wrapper
