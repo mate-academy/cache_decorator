@@ -1,6 +1,5 @@
-from typing import Callable
+from typing import Callable, Any, Tuple
 from functools import wraps
-from typing import Any, Tuple
 
 
 def cache(func: Callable) -> Callable:
