@@ -6,16 +6,14 @@ def cache(func: Callable) -> Callable:
     cache_storage = {}
 
     @wraps(func)
-    def wrapper(*args) -> Any:
-        key = args
-
-        if args in cache_storage:
+    def wrapper(*args, **kwargs) -> Any:
+        key = (func.__name__, args, frozenset(kwargs.items()))
+        if key in cache_storage:
             print("Getting from cache")
-            return cache_storage[key]
         else:
             print("Calculating new result")
-            result = func(*args)
-            cache_storage[key] = result
-            return result
+            cache_storage[key] = func(*args, **kwargs)
+
+        return cache_storage[key]
 
     return wrapper
