@@ -1,5 +1,6 @@
 from typing import Callable, Any
 
+
 def cache(func: Callable) -> Callable:
     storage = {}
 
@@ -12,4 +13,5 @@ def cache(func: Callable) -> Callable:
             result = func(*args, **kwargs)
             storage[args] = result
         return result
+
     return wrapper
