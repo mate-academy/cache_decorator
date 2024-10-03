@@ -4,7 +4,7 @@ from typing import Callable, Any
 def cache(func: Callable) -> Callable:
     res_dict = {}
 
-    def wrapper(*args) -> Any:
+    def wrapper(*args, **kwargs) -> Any:
         if args in res_dict:
             print("Getting from cache")
             return res_dict[args]
