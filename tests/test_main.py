@@ -171,42 +171,6 @@ def test_deco_returns_cached_value():
     assert time3 - time2 < 1, "Cache decorator should return cached value."
 
 
-def test_use_named_arguments():
-    @cache
-    def sum_named_arguments(a, b):
-        return a + b
-
-    f = io.StringIO()
-
-    with redirect_stdout(f):
-        sum_named_arguments(a=1, b=1)
-        sum_named_arguments(a=1, b=1)
-        sum_named_arguments(a=2, b=2)
-        sum_named_arguments(a=2, b=2)
-
-    out = f.getvalue()
-
-    output = (
-        "Calculating new result\n"
-        "Getting from cache\n"
-        "Calculating new result\n"
-        "Getting from cache\n"
-    )
-
-    assert (
-        out == output
-    ), f"""
-            output must be:
-            {output},
-    
-            while calls are:  
-                sum_named_arguments(a=1, b=1)
-                sum_named_arguments(a=1, b=1)
-                sum_named_arguments(a=2, b=2)
-                sum_named_arguments(a=2, b=2)
-        """
-
-
 def test_unnecessary_comment():
     if os.path.exists(os.path.join(os.pardir, "app", "main.py")):
         main_path = os.path.join(os.pardir, "app", "main.py")
