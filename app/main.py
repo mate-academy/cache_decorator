@@ -1,14 +1,14 @@
 from functools import wraps
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     store = {}
 
     @wraps(func)
-    def wrapped(*args, **kwargs) -> dict:
+    def wrapped(*args, **kwargs) -> Any:
 
-        key = (args, frozenset(kwargs.items()))
+        key = (func.__name__, args, frozenset(kwargs.items()))
 
         if key in store:
             print("Getting from cache")
