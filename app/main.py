@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Any, Callable
 import functools
 
 
@@ -6,7 +6,7 @@ def cache(func: Callable) -> Callable:
     dict_cache = {}
 
     @functools.wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
+    def wrapper(*args, **kwargs) -> Any:
         key = (func.__name__, args, tuple(kwargs.items()))
         if key not in dict_cache:
             dict_cache[key] = func(*args, **kwargs)
