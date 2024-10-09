@@ -1,17 +1,22 @@
+from functools import wraps
 from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-
     store = {}
 
-    def wrapped(*args) -> Callable:
-        if args in store:
+    @wraps(func)
+    def wrapped(*args, **kwargs) -> dict:
+
+        key = (args, frozenset(kwargs.items()))
+
+        if key in store:
             print("Getting from cache")
-            return store[args]
-        else:
-            print("Calculating new result")
-            result = func(*args)
-            store[args] = result
-            return result
+            return store[key]
+
+        print("Calculating new result")
+        result = func(*args, **kwargs)
+        store[key] = result
+        return result
+
     return wrapped
