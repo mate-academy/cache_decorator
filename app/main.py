@@ -1,16 +1,18 @@
-from typing import Callable, Any, Tuple
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     results = {}
 
     def wrapper(*args) -> tuple[Any, ...] | Any:
-        results_item = tuple(args)
-        if results_item in results:
-            return results[results_item]
+        cache_key = tuple(args)
+        if cache_key in results:
+            print("Getting from cache")
+            return results[cache_key]
         else:
-            new_result = tuple(args)
-            results[results_item] = new_result
+            print("Calculating new result")
+            new_result = func(*args)
+            results[cache_key] = new_result
             return new_result
 
     return wrapper
