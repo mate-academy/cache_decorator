@@ -1,23 +1,27 @@
 from typing import Callable
-import functools
+from functools import wraps
+import logging
+
+
+# Configure logging with INFO level
+logging.basicConfig(level=logging.INFO,
+                    format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 def cache(func: Callable) -> Callable:
-    cache_storage = {}  # Dictionary to store results of completed runs
+    cache_storage = {}
 
-    @functools.wraps(func)
+    @wraps(func)
     def wrapper(*args) -> Callable:
         if args in cache_storage:
-            print("Getting from cache")
+            logging.info("Getting from cache: %s", args)
             return cache_storage[args]
         else:
-            print("Calculating new result")
+            logging.info("Calculating new result for: %s", args)
             result = func(*args)
             cache_storage[args] = result
             return result
     return wrapper
-
-# Example usage
 
 
 @cache
@@ -28,14 +32,3 @@ def long_time_func(a: int, b: int, c: int) -> int:
 @cache
 def long_time_func_2(n_tuple: tuple, power: int) -> list:
     return [number ** power for number in n_tuple]
-
-
-# Test the cache decorator
-
-
-long_time_func(1, 2, 3)          # Calculating new result
-long_time_func(2, 2, 3)          # Calculating new result
-long_time_func_2((5, 6, 7), 5)   # Calculating new result
-long_time_func(1, 2, 3)          # Getting from cache
-long_time_func_2((5, 6, 7), 10)   # Calculating new result
-long_time_func_2((5, 6, 7), 10)   # Getting from cache
