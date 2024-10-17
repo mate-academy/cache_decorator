@@ -29,7 +29,6 @@ def cache(func: Callable) -> Callable:
                 print("Getting from cache")
 
             else:
-                cache_storage[func_name].add(args)
                 func_result = add_to_storage(func_name, args)
         else:
             cache_storage[func_name] = set()
@@ -38,3 +37,5 @@ def cache(func: Callable) -> Callable:
         return func_result
 
     return wrapper
+
+
