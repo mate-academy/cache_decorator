@@ -1,6 +1,7 @@
 from typing import Callable, Any, Tuple
 import functools
 
+
 def cache(func: Callable) -> Callable:
     # Dictionary to hold cache for each function
     cached_results = {}
@@ -21,9 +22,11 @@ def cache(func: Callable) -> Callable:
 
     return wrapper
 
+
 @cache
 def long_time_func(base: int, exponent: int, modulus: int) -> int:  # Updated parameter names
     return (base ** exponent) % (base * modulus)
+
 
 @cache
 def long_time_func_2(n_tuple: tuple, power: int) -> list:
