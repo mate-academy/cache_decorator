@@ -9,9 +9,8 @@ def cache(func: Callable) -> Callable:
     def add_to_storage(func_name: str, args: tuple) -> int:
 
         func_result = func(*args)
-        cache_storage[func_name].add(args)
-        cache_storage[func_name + "_res"] = {}
-        cache_storage[func_name + "_res"][func_result] = args
+        launch_in = str(args)
+        cache_storage[func_name][launch_in] = func_result
         print("Calculating new result")
         return func_result
 
@@ -22,20 +21,15 @@ def cache(func: Callable) -> Callable:
         func_result = None
 
         if func_name in cache_storage:
-            if args in cache_storage[func_name]:
-                for key, value in cache_storage[func_name + "_res"].items():
-                    if value == args:
-                        func_result = key
+            if str(args) in cache_storage[func_name]:
+                func_result = cache_storage[func_name][str(args)]
                 print("Getting from cache")
-
             else:
                 func_result = add_to_storage(func_name, args)
         else:
-            cache_storage[func_name] = set()
+            cache_storage[func_name] = dict()
             func_result = add_to_storage(func_name, args)
 
         return func_result
 
     return wrapper
-
-
