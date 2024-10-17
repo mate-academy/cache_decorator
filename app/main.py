@@ -1,12 +1,13 @@
 from typing import Callable, Any, Tuple
 import functools
 
-
 def cache(func: Callable) -> Callable:
+    # Dictionary to hold cache for each function
     cached_results = {}
 
     @functools.wraps(func)
     def wrapper(*args: Tuple[Any], **kwargs: Any) -> Any:
+        # Create a key based on the function name and arguments
         key = (func.__name__, args, frozenset(kwargs.items()))
 
         if key in cached_results:
@@ -20,11 +21,9 @@ def cache(func: Callable) -> Callable:
 
     return wrapper
 
-
 @cache
-def long_time_func(a: int, b: int, c: int) -> int:
-    return (a ** b ** c) % (a * c)
-
+def long_time_func(base: int, exponent: int, modulus: int) -> int:  # Updated parameter names
+    return (base ** exponent) % (base * modulus)
 
 @cache
 def long_time_func_2(n_tuple: tuple, power: int) -> list:
