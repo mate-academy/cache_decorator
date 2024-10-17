@@ -18,7 +18,6 @@ def cache(func: Callable) -> Callable:
     def wrapper(*args) -> Callable:
 
         func_name = func.__name__
-        func_result = None
 
         if func_name in cache_storage:
             if str(args) in cache_storage[func_name]:
