@@ -24,7 +24,7 @@ def cache(func: Callable) -> Callable:
 
 
 @cache
-def long_time_func(base: int, exponent: int, modulus: int) -> int:  # Updated parameter names
+def long_time_func(base: int, exponent: int, modulus: int) -> int:
     return (base ** exponent) % (base * modulus)
 
 
