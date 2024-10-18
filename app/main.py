@@ -3,13 +3,11 @@ import functools
 
 
 def cache(func: Callable) -> Callable:
-    # Dictionary to hold cache for each function
     cached_results = {}
 
     @functools.wraps(func)
     def wrapper(*args: Tuple[Any], **kwargs: Any) -> Any:
-        # Create a key based on the function name and arguments
-        key = (func.__name__, args, frozenset(kwargs.items()))
+        key = (args, frozenset(kwargs.items()))
 
         if key in cached_results:
             print("Getting from cache")
