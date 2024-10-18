@@ -24,5 +24,5 @@ def cache(func: Callable) -> Callable:
 
 
 @cache
-def long_time_func_2(n_tuple: tuple, power: int) -> list:
-    return [number ** power for number in n_tuple]
+def long_time_func(base: int, exponent: int, modulus: int) -> int:
+    return (base ** exponent) % (base * modulus)
