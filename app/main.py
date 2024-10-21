@@ -4,9 +4,10 @@ from functools import wraps
 
 def cache(func: Callable) -> Callable:
     cache_dict = {}
-    @wraps(func)
 
+    @wraps(func)
     def inner(*args: Hashable, **kwargs: Hashable) -> Any:
+
         cache_key = (args, tuple(kwargs.items()))
         if cache_key in cache_dict:
             print("Getting from cache")
@@ -24,7 +25,7 @@ def long_time_func(a: int, b: int, c: int) -> int:
 
 
 @cache
-def long_time_func_2(n_tuple: tuple, power: int) -> int:
+def long_time_func_2(n_tuple: tuple, power: int) -> list:
     return [number ** power for number in n_tuple]
 
 
