@@ -4,6 +4,7 @@ from functools import wraps
 
 def cache(func: Callable) -> Callable:
     cache_dict = {}
+
     @wraps(func)
     def inner(*args: Hashable, **kwargs: Hashable) -> Any:
         cache_key = (args, tuple(kwargs.items()))
