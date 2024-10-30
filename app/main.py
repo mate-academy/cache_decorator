@@ -3,7 +3,7 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     storage = {}
 
-    def wrapper(*args):
+    def wrapper(*args) -> int:
         if args in storage:
             print("Getting from cache")
             return storage[args]
@@ -15,9 +15,13 @@ def cache(func: Callable) -> Callable:
 
     return wrapper
 
-@cache
-def long_time_func(a: int, b: int, c: int) -> int:
-    return (a ** b ** c) % (a * c)
 
-long_time_func(1, 2, 3)
-long_time_func(1, 2, 3)
+@cache
+def long_time_func(base: int, exponent: int, mod: int) -> int:
+    return (base ** exponent) % mod
+
+
+@cache
+def long_time_func_2(numbers: tuple, power: int) -> list:
+    return [number ** power for number in numbers]
+
