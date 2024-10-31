@@ -10,6 +10,9 @@ def cache(func: Callable) -> Callable:
         for value in args:
             if isinstance(value, (list, set, dict)):
                 return None
+        for value in kwargs.values():
+            if isinstance(value, (list, set, dict)):
+                return None
         for args_save, kwargs_save, result_save in calculated_data:
             if args_save == args and kwargs_save == kwargs:
                 print("Getting from cache")
