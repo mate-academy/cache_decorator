@@ -6,7 +6,7 @@ def cache(func: Callable) -> Callable:
     cache_dict = {}
 
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> Callable:
         if args in cache_dict:
             print("Getting from cache")
             return cache_dict[args]
