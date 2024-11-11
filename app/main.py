@@ -1,10 +1,10 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     cache_dict = {}
 
-    def wrapper(*args, **kwargs) -> None:
+    def wrapper(*args, **kwargs) -> Any:
         flag = True
         while flag:
             data_iterable = tuple(
@@ -27,5 +27,5 @@ def long_time_func(a: int, b: int, c: int) -> int:  # NOQA VNE001
 
 
 @cache
-def long_time_func_2(n_tuple: tuple, power: int) -> int:
+def long_time_func_2(n_tuple: tuple, power: int) -> list:
     return [number ** power for number in n_tuple]
