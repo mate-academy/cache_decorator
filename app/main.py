@@ -2,5 +2,8 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    # Write your code here
-    pass
+    def wrapper(*args, **kwargs) -> None:
+        result = func(*args, **kwargs)
+        return result
+    return wrapper
+
