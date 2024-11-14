@@ -1,4 +1,3 @@
-from symbol import parameters
 from typing import Callable
 
 
