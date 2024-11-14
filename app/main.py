@@ -1,16 +1,14 @@
 from typing import Callable, Any
 
 
-def cache(numero: int) -> Any:
+def cache(func: Callable) -> Any:
+    results = {}
+
     def wrapper(*args, **kwargs) -> Any:
-        def inner(func: Callable) -> Any:
-            results = []
-            for _ in range(numero):
-                results.append(func(*args, **kwargs))
-                for result in results:
-                    if results.count(result) > 1:
-                        print(f"Getting from cache {result}")
-                    else:
-                        print(f"Calculating new result {result}")
-        return inner
+        if args in results:
+            print(f"Getting from cache {results[args]}")
+        else:
+            result = func(*args)
+            results[args] = result
+            print(f"Calculating new result {result}")
     return wrapper
