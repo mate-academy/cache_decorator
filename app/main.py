@@ -5,7 +5,7 @@ def cache(func: Callable) -> Callable:
 
     tmp_cache = {}
 
-    def inner(*args):
+    def inner(*args) -> None:
         if args in tmp_cache:
             print("Getting from cache")
             return tmp_cache[args]
