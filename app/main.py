@@ -6,17 +6,12 @@ def cache(func: Callable) -> Callable:
 
     def collector(*args) -> None:
         if args not in parameters:
-            parameters[args] = func(*args)
-            print("Calculating new result ")
-            return func(*args)
+            res = func(*args)
+            parameters[args] = res
+            print("Calculating new result")
+            return res
         else:
             print("Getting from cache")
             return parameters[args]
 
-
     return collector
-
-
-
-
-
