@@ -4,11 +4,13 @@ from typing import Callable, Any
 def cache(func: Callable) -> Any:
     results = {}
 
-    def wrapper(*args, **kwargs) -> Any:
+    def wrapper(*args) -> Any:
         if args in results:
-            print(f"Getting from cache {results[args]}")
+            print("Getting from cache")
+            return results[args]
         else:
             result = func(*args)
             results[args] = result
-            print(f"Calculating new result {result}")
+            print("Calculating new result")
+            return result
     return wrapper
