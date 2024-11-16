@@ -5,13 +5,18 @@ def cache(func: Callable) -> Callable:
     storage = {}
 
     def wrapper(*args) -> Callable:
-        if args in storage:
+        try:
+            key = tuple(args)
+        except TypeError as e:
+            raise ValueError(f"All arguments must be hashable: {e}")
+
+        if key in storage:
             print("Getting from cache")
-            return storage[args]
+            return storage[key]
         else:
             print("Calculating new result")
             result = func(*args)
-            storage[args] = result
+            storage[key] = result
             return result
 
     return wrapper
