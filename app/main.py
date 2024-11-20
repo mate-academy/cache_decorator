@@ -2,14 +2,14 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    def inner():
-        func()
+    cache_store = {}
+
+    def inner(*args) -> Callable:
+        if args in cache_store:
+            print("Getting from cache")
+            return cache_store[args]
+        print("Calculating new result")
+        result = func(*args)
+        cache_store[args] = result
+        return result
     return inner
-
-@cache
-def long_time_func(a: int, b: int, c: int) -> int:
-    return (a ** b ** c) % (a * c)
-
-@cache
-def long_time_func_2(n_tuple: tuple, power: int) -> int:
-    return [number ** power for number in n_tuple]
