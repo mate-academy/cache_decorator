@@ -1,7 +1,7 @@
 from typing import Callable
 
 
-def make_hashable(args):
+def make_hashable(*args) -> tuple:
     hashable_args = []
     for arg in args:
         if isinstance(arg, (list, set)):
