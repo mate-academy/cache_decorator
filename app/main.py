@@ -5,10 +5,11 @@ def cache(func: Callable) -> Callable:
     storage = {}
 
     def wrapper(*args) -> Callable:
-        if args not in storage:
-            print("Calculating new result")
-            return storage.setdefault(args, func(*args))
-        else:
+        if args in storage:
             print("Getting from cache")
-            return storage.get(args)
+        else:
+            print("Calculating new result")
+            storage.setdefault(args, func(*args))
+        return storage.get(args)
+
     return wrapper
