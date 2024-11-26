@@ -1,17 +1,14 @@
-from typing import Callable
+from collections.abc import Callable
 
 
 def cache(func: Callable) -> Callable:
-    cached_data = {}
+    storage = {}
 
-    def wrapper(*args, **kwargs) -> Callable:
-        parameters = tuple(args)
-        if parameters not in cached_data.keys():
-            result = func(*args, **kwargs)
-            cached_data[parameters] = result
+    def wrapper(*args) -> Callable:
+        if args not in storage:
             print("Calculating new result")
-            return result
+            return storage.setdefault(args, func(*args))
         else:
             print("Getting from cache")
-            return cached_data.get(parameters)
+            return storage.get(args)
     return wrapper
