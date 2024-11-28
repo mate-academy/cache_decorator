@@ -7,7 +7,6 @@ def cache(func: Callable) -> Callable:
 
     def wrapper(*args) -> None:
 
-        nonlocal cash_data_check
         cashed_data = args
 
         if cashed_data in cash_data_check:
