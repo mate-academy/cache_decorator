@@ -3,18 +3,18 @@ from typing import Callable
 
 def cache(func: Callable) -> Callable:
 
-    cash_data_check = {}
+    cashed_data = {}
 
     def wrapper(*args) -> None:
 
-        cashed_data = args
+        cash_data_check = args
 
-        if cashed_data in cash_data_check:
+        if cash_data_check in cashed_data:
             print("Getting from cache")
-            return cash_data_check.get(cashed_data)
+            return cashed_data.get(cash_data_check)
         else:
             result = func(*args)
-            cash_data_check.update({cashed_data: result})
+            cashed_data.update({cash_data_check: result})
             print("Calculating new result")
             return result
 
