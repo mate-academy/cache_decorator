@@ -5,7 +5,6 @@ from functools import wraps
 def cache(func: Callable) -> Any:
     results = {}
     wraps(func)
-
     def wrapper(*args, **kwargs) -> Any:
         key = tuple(args) + tuple(*kwargs.items())
         if key in results:
