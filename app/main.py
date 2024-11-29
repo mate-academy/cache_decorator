@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 from functools import wraps
 
 
@@ -6,7 +6,7 @@ def cache(func: Callable) -> Callable:
     stored_results = {}
 
     @wraps(func)
-    def wrapper(*args) -> dict:
+    def wrapper(*args) -> Any:
         if args not in stored_results:
             print("Calculating new result")
             stored_results[args] = func(*args)
