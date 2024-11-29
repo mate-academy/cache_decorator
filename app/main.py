@@ -1,13 +1,13 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
 
     cashed_data = {}
 
-    def wrapper(*args) -> None:
+    def wrapper(*args) -> Callable:
 
-        cash_data_check = args
+        cash_data_check = (args, )
 
         if cash_data_check in cashed_data:
             print("Getting from cache")
