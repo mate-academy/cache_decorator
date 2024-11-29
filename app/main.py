@@ -1,17 +1,17 @@
 from typing import Callable, Any
-from functools import wraps
-
 
 def cache(func: Callable) -> Callable:
-    stored_results = {}
+    cashed_data = {}
 
-    @wraps(func)
-    def wrapper(*args) -> Any:
-        if args not in stored_results:
-            print("Calculating new result")
-            stored_results[args] = func(*args)
-        else:
+    def wrapper(*args) -> None:
+
+        cache_data_check = args
+
+        if cache_data_check in cashed_data:
             print("Getting from cache")
-        return stored_results[args]
-
+        else:
+            result = func(*args)
+            cashed_data.update({cache_data_check: result})
+            print("Calculating new result")
+        return cashed_data[cache_data_check]
     return wrapper
