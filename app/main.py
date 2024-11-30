@@ -2,6 +2,10 @@ from typing import Callable, Dict, Tuple, Any
 
 
 def cache(func: Callable) -> Callable:
+    """
+    A decorator that caches the results of function
+    calls with immutable arguments.
+    """
     cache_store: Dict[Tuple, Any] = {}
 
     def wrapper(*args) -> Any:
