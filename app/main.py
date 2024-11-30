@@ -1,11 +1,10 @@
-from typing import Callable, Dict, Tuple
+from typing import Callable, Dict, Tuple, Any
 
 
 def cache(func: Callable) -> Callable:
-    cache_store: Dict[Tuple, any] = {}
+    cache_store: Dict[Tuple, Any] = {}
 
-
-    def wrapper(*args):
+    def wrapper(*args) -> Any:
         if args in cache_store:
             print("Getting from cache")
             return cache_store[args]
@@ -14,4 +13,5 @@ def cache(func: Callable) -> Callable:
             result = func(*args)
             cache_store[args] = result
             return result
-    return wrapper()
+
+    return wrapper
