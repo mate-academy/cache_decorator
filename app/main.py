@@ -7,7 +7,7 @@ def cache(func: Callable) -> Callable:
     cache_dict = {}
 
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> Callable:
 
         key = (args, tuple(kwargs.items()))
 
