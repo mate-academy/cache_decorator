@@ -4,15 +4,14 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     cached_data = {}
 
-    def wrapper(*args) -> None:
+    def wrapper(*args) -> Callable:
 
-        cache_data_check = args
-
-        if cache_data_check in cached_data:
+        if args in cached_data:
             print("Getting from cache")
+            return cached_data[args]
         else:
-            result = func(*args)
-            cached_data.update({cache_data_check: result})
             print("Calculating new result")
-        return cached_data[cache_data_check]
+            cached_data[args] = func(*args)
+            return cached_data[args]
+
     return wrapper
