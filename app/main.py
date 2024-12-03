@@ -1,16 +1,15 @@
-from typing import Callable
+from typing import Any
 
 
-def cache(func: Callable) -> Callable:
+def cache(func: Any) -> Any:
     cache_data = {}
 
-    def wrapper(*args) -> Callable:
-        if args in cache_data.keys():
+    def wrapper(*args) -> Any:
+        if args in cache_data:
             print("Getting from cache")
-            return cache_data[args]
-
-        cache_data[args] = func(*args)
-        print("Calculating new result")
+        else:
+            cache_data[args] = func(*args)
+            print("Calculating new result")
         return cache_data[args]
 
     return wrapper
