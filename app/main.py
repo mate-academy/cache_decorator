@@ -12,7 +12,6 @@ def cache(func: Callable) -> Callable:
             result = func(*args)
             print("Calculating new result")
             history[args] = result
-
         return result
 
     return wrapper
