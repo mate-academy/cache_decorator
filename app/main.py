@@ -1,7 +1,7 @@
-from typing import Any
+from typing import Callable, Any
 
 
-def cache(func: Any) -> Any:
+def cache(func: Callable) -> Callable:
     cache_data = {}
 
     def wrapper(*args) -> Any:
