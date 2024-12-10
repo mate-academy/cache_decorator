@@ -5,7 +5,7 @@ def cache(func: Callable) -> Callable:
     storage = {}
 
     def inner(*args, **kwargs) -> Any:
-        key = str(args) + str(kwargs)
+        key = (args, tuple(sorted(kwargs.items())))
         if key in storage:
             print("Getting from cache")
             return storage[key]
