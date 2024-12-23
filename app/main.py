@@ -6,7 +6,7 @@ def cache(func: Callable) -> Callable:
     new_dict = {}
 
     @functools.wraps(func)
-    def wrapper(*args: Any) -> Any:
+    def wrapper(*args: (int, tuple)) -> Any:
         if args not in new_dict:
             print("Calculating new result")
             new_dict[args] = func(*args)
