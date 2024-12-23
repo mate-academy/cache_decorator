@@ -1,9 +1,9 @@
-from typing import Callable, Any
+from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
     storage = dict()
-    def wrapper(*args, **kwargs) -> Any:
+    def wrapper(*args, **kwargs) -> int:
         nonlocal storage
         if args not in storage:
             storage[args] = func(*args, **kwargs)
