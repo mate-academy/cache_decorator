@@ -13,4 +13,3 @@ def cache(func: Callable) -> Callable:
             new_set[(func.__name__, *args)] = result
             return result
     return wrapper
-
