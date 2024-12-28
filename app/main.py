@@ -1,10 +1,10 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     cache_history = {}
 
-    def wrapper(*args):
+    def wrapper(*args: Any) -> Callable:
         nonlocal cache_history
 
         if args in cache_history.keys():
