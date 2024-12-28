@@ -6,13 +6,14 @@ def cache(func: Callable) -> Callable:
 
     def wrapper(*args: Any) -> Callable:
         nonlocal cache_history
+        cache_key = args
 
-        if args in cache_history.keys():
+        if cache_key in cache_history:
             print("Getting from cache")
-            return cache_history[args]
+            return cache_history[cache_key]
         else:
             print("Calculating new result")
             result = func(args)
-            cache_history[args] = result
+            cache_history[cache_key] = result
             return result
     return wrapper
