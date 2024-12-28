@@ -1,11 +1,12 @@
-from typing import Callable, Any
+import functools
+from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
     cache_history = {}
 
-    def wrapper(*args: Any) -> Callable:
-        nonlocal cache_history
+    @functools.wraps
+    def wrapper(*args, **kwargs) -> Callable:
         cache_key = args
 
         if cache_key in cache_history:
@@ -13,7 +14,7 @@ def cache(func: Callable) -> Callable:
             return cache_history[cache_key]
         else:
             print("Calculating new result")
-            result = func(*args)
+            result = func(*args, **kwargs)
             cache_history[cache_key] = result
             return result
     return wrapper
