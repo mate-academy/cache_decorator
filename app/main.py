@@ -5,7 +5,7 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     cache_history = {}
 
-    @functools.wraps
+    @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Callable:
         cache_key = args
 
