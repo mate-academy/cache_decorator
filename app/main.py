@@ -1,22 +1,19 @@
 from typing import Callable, Any
 
 
-cache_dict = {}
-
-
 def cache(func: Callable) -> Callable:
+    cache_dict = {}
+
     def inner(*args, **kwargs) -> Any:
-        if f"{func}" in cache_dict:
-            if args in cache_dict[f"{func}"]:
-                print("Getting from cache")
-                return cache_dict[f"{func}"][args]
-            else:
-                print("Calculating new result")
-                cache_dict[f"{func}"][args] = func(*args, **kwargs)
-        else:
-            result = func(*args, **kwargs)
+        func_name = f"{func.__name__}"
+
+        if func_name not in cache_dict:
+            cache_dict[func_name] = {}
+        if args not in cache_dict[func_name]:
+            cache_dict[func_name][args] = func(*args, **kwargs)
             print("Calculating new result")
-            cache_dict[f"{func}"] = {}
-            cache_dict[f"{func}"][args] = result
-            return result
+        else:
+            print("Getting from cache")
+
+        return cache_dict[func_name][args]
     return inner
