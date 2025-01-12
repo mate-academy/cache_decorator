@@ -9,7 +9,7 @@ import os
 def test_cache_single_function():
     @cache
     def long_time_func(a, b, c):
-        return (a ** b ** c) % (a * c)
+        return (a**b**c) % (a * c)
 
     f = io.StringIO()
 
@@ -30,9 +30,7 @@ def test_cache_single_function():
         "Getting from cache\n"
     )
 
-    assert (
-            out == output
-    ), f"""
+    assert out == output, f"""
                 output must be:
                 {output},
 
@@ -48,7 +46,7 @@ def test_cache_single_function():
 def test_cache_multiple_functions():
     @cache
     def long_time_func(a, b, c):
-        return (a ** b ** c) % (a * c)
+        return (a**b**c) % (a * c)
 
     @cache
     def long_time_func_2(text_1, text_2):
@@ -56,7 +54,7 @@ def test_cache_multiple_functions():
 
     @cache
     def long_time_func_3(n_list, text):
-        return f"{[i ** 2 for i in n_list]}, {text}"
+        return f"{[i**2 for i in n_list]}, {text}"
 
     f = io.StringIO()
 
@@ -89,9 +87,7 @@ def test_cache_multiple_functions():
         "Calculating new result\n"
     )
 
-    assert (
-        out == output
-    ), f"""
+    assert out == output, f"""
             output must be:
             {output},
 
@@ -113,7 +109,7 @@ def test_cache_multiple_functions():
 def test_cache_returns_correct_value():
     @cache
     def long_time_func(a, b, c):
-        return (a ** b ** c) % (a * c)
+        return (a**b**c) % (a * c)
 
     first_value = long_time_func(2, 3, 3)
     second_value = long_time_func(2, 3, 3)
@@ -148,9 +144,7 @@ def test_cache_depends_on_different_functions():
         "Getting from cache\n"
     )
 
-    assert (
-            out == output
-    ), "Cache decorator should depend on different function"
+    assert out == output, "Cache decorator should depend on different function"
 
 
 def test_deco_returns_cached_value():
@@ -180,6 +174,6 @@ def test_unnecessary_comment():
     with open(main_path, "r") as main:
         main_content = main.read()
 
-        assert (
-                "# Write your code here" not in main_content
-        ), "Remove unnecessary comment"
+        assert "# Write your code here" not in main_content, (
+            "Remove unnecessary comment"
+        )
