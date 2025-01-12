@@ -14,3 +14,4 @@ def cache(func: Callable) -> Callable:
             return cash[args]
 
     return inner
+#
