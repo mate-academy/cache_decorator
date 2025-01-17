@@ -1,7 +1,7 @@
 from functools import wraps
 
 
-def cache(func: tuple) -> dict:
+def cache(func) -> dict:
     cache_store = {}
 
     @wraps(func)
@@ -11,11 +11,11 @@ def cache(func: tuple) -> dict:
 
         if args in cache_store[func]:
             print("Getting from cache")
-            return cache_store[func][args]
+            return cache_store[func][*args]
         else:
             print("Calculating new result")
             result = func(*args)
-            cache_store[func][args] = result
+            cache_store[func][*args] = result
             return result
 
     return wrapper
@@ -28,7 +28,7 @@ def long_time_func(num1: int, num2: int, num3: int) -> int:
 
 @cache
 def long_time_func_2(n_tuple: tuple, power: int) -> int:
-    return [number ** power for number in n_tuple]
+    return tuple(number ** power for number in n_tuple)
 
 
 print(long_time_func(1, 2, 3))
