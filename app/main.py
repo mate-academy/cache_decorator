@@ -6,7 +6,7 @@ def cache(func: Callable) -> Callable:
     cache_storage = {}
 
     @wraps(func)
-    def wrapper(*args) -> Callable:
+    def wrapper(*args) -> Any:
         if not all(isinstance(arg, (int, float, str, tuple, bool))
                    for arg in args):
             raise TypeError("Only immutable argument types")
@@ -26,8 +26,8 @@ def long_time_func(base: int, exponent: int, multiplier: int) -> int:
 
 
 @cache
-def long_time_func_2(n_tuple: tuple, power: int) -> Any:
-    return [number ** power for number in n_tuple]
+def long_time_func_2(n_tuple: tuple, power: int) -> tuple:
+    return tuple(number ** power for number in n_tuple)
 
 
 if __name__ == "__main__":
