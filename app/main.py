@@ -1,13 +1,16 @@
-from typing import Callable, Any
+from typing import TypeVar, Callable, Any
+ImmutableType = TypeVar('ImmutableType', int, float, bool, str, tuple)
 
-def cache(func: Callable[[str, tuple, int, float, bool], Callable]):
-    operations_cache = []
+
+def cache(func: Callable[[ImmutableType], Any]):
+    operations_cache = {}
     def wrapper(*args, **kwargs):
-        res = func(*args, **kwargs)
-        if res not in operations_cache:
-            operations_cache.append(res)
-            print("Calculating new result")
-        else:
+        key = str(args)
+        if key in operations_cache:
             print("Getting from cache")
-        return operations_cache[operations_cache.index(res)]
+            return operations_cache[key]
+        res = func(*args, **kwargs)
+        operations_cache[key] = res
+        print("Calculating new result")
+        return res
     return wrapper
