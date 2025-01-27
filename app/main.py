@@ -18,7 +18,6 @@ def cache(func: Callable) -> Callable:
 
      print("Calculating new result")
      result = func(*args, **kwargs)
-
      function_caches[func][key] = result
      return result
 
