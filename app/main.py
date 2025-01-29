@@ -4,7 +4,7 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     cache_result = {}
 
-    def func_results(*args, **kwargs):
+    def func_results(*args, **kwargs) -> None:
         for arg in args:
             if not isinstance(arg, (int, str, float, tuple)):
                 print("Value is mutable")
@@ -21,4 +21,5 @@ def cache(func: Callable) -> Callable:
         res = func(*args, **kwargs)
         cache_result[names] = res
         return res
+
     return func_results
