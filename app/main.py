@@ -4,7 +4,6 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     cache_result = {}
 
-
     def func_results(*args, **kwargs):
         for arg in args:
             if not isinstance(arg, (int, str, float, tuple)):
