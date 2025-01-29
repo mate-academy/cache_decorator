@@ -2,14 +2,16 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    cache_result ={}
+    cache_result = {}
+
+
     def func_results(*args, **kwargs):
         for arg in args:
-            if not isinstance(arg,(int,str,float, tuple)):
+            if not isinstance(arg, (int, str, float, tuple)):
                 print("Value is mutable")
                 return
         for keys, value in kwargs.items():
-            if not isinstance(value,(int,str,float, tuple)):
+            if not isinstance(value, (int, str, float, tuple)):
                 print("Value is mutable")
                 return
         names = (args, tuple(kwargs.items()))
