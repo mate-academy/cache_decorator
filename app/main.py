@@ -3,8 +3,7 @@ from functools import wraps
 
 function_caches = {}
 
-
-def cache(func: Callable) -> Callable:
+def cache(func: Callable[..., Any]) -> Callable[..., Any]:
     function_caches[func] = {}
 
     @wraps(func)
