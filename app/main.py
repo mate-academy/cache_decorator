@@ -10,11 +10,11 @@ def cache(func: Callable) -> Callable:
         key = (args, tuple(kwargs.items()))
         if key in cash_store:
             print("Getting from cache")
-            return cash_store[key]
+            result = cash_store[key]
         else:
+            print("Calculating new result")
             result = func(*args, **kwargs)
             cash_store[key] = result
-            print("Calculating new result")
-            return result
+        return result
 
     return wrapper
