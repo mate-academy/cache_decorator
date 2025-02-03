@@ -8,7 +8,7 @@ def cache(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
     def wrapper(*args, **kwargs) -> Any:
         if func not in function_caches:
-            function_caches[func] = {}  # Ініціалізація кешу тільки при першому виклику
+            function_caches[func] = {}
 
         key = (
             args,
