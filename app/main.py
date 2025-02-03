@@ -3,13 +3,17 @@ from functools import wraps
 
 function_caches = {}
 
+
 def cache(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
     def wrapper(*args, **kwargs) -> Any:
         if func not in function_caches:
             function_caches[func] = {}  # Ініціалізація кешу тільки при першому виклику
 
-        key = (args, tuple(sorted(kwargs.items())))
+        key = (
+            args,
+            tuple(sorted(kwargs.items()))
+        )
 
         if key in function_caches[func]:
             print("Getting from cache")
@@ -21,4 +25,3 @@ def cache(func: Callable[..., Any]) -> Callable[..., Any]:
         return result
 
     return wrapper
-
