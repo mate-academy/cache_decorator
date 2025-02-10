@@ -1,10 +1,10 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     storage = {}
 
-    def wrapper(*args, **kwargs) -> int:
+    def wrapper(*args: Any, **kwargs: Any) -> int:
 
         key = (args, frozenset(kwargs.items())) if kwargs else args
 
@@ -13,8 +13,7 @@ def cache(func: Callable) -> Callable:
             return storage[key]
         else:
             print("Calculating new result")
-            result = func(*args, **kwargs)
-            storage[key] = result
-            return result
+            storage[key] = func(*args, **kwargs)
+            return storage[key]
 
     return wrapper
