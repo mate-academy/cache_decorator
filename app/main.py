@@ -6,7 +6,7 @@ def cache(func: Callable) -> Callable:
     cache_resullt = {}
 
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> Callable:
         key = (args, tuple(sorted(kwargs.items())))
 
         if key in cache:
