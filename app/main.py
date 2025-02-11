@@ -1,8 +1,9 @@
 from typing import Callable
 import functools
 
+
 def cache(func: Callable) -> Callable:
-    cache = {}
+    cache_resullt = {}  # Словник для збереження кешу
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -10,11 +11,11 @@ def cache(func: Callable) -> Callable:
 
         if key in cache:
             print("Getting from cache")
-            return cache[key]
+            return cache_resullt[key]  # Повертаємо кешований результат
 
         print("Calculating new result")
-        result = func(*args, **kwargs)
-        cache[key] = result
+        result = func(*args, **kwargs)  # Обчислюємо новий результат
+        cache_resullt[key] = result  # Зберігаємо в кеш
         return result
 
-    return wrapper
+    return wrapper  # Повертаємо обгорнуту функцію
