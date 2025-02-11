@@ -8,9 +8,14 @@ def cache(func: Callable) -> Callable:
 
         key = (args, frozenset(kwargs.items())) if kwargs else args
 
-        print("Getting from cache" if key in storage
-              else "Calculating new result")
-        return storage[key] if key in storage \
-            else storage.setdefault(key, func(*args, **kwargs))
+        if key in storage:
+            print("Getting from cache")
+            result = storage[key]
+        else:
+            print("Calculating new result")
+            result = func(*args, **kwargs)
+            storage[key] = result
+
+        return result
 
     return wrapper
