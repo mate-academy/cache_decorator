@@ -5,7 +5,7 @@ def cache(func: Callable) -> Callable:
     store = {}
 
     def inner(*args: list) -> Callable:
-        key = hash(args)
+        key = tuple(args)
 
         if key in store:
             print("Getting from cache")
