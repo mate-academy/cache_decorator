@@ -1,4 +1,7 @@
-def cache(func):
+from typing import Callable
+
+
+def cache(func: Callable):
     cache_data = {}
 
     def wrapper(*args, **kwargs):
