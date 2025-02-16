@@ -4,6 +4,7 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
 
     completed_runs = {}
+
     def wrapper(*args) -> dict:
 
         if args in completed_runs:
