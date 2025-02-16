@@ -4,7 +4,7 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     cache_storage = {}
 
-    def inner(*args, **kwargs):
+    def inner(*args, **kwargs) -> None:
         if func not in cache_storage:
             cache_storage[func] = {}
 
