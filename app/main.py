@@ -3,21 +3,13 @@ from typing import Callable
 
 def cache(func: Callable) -> Callable:
     def wrapper(*args):
-        completed_runs = []
-        result = func(completed_runs)
-        for value in (args):
-            if value is not isinstance(value, (int, float, str, bool, tuple,)):
-                pass
-            else:
-                completed_runs.append(result)
+        completed_runs = {}
+        if args in completed_runs:
+            print("Getting from cache")
+            return completed_runs[args]
+        else:
+            print("Calculating new result")
+            completed_runs[args] = func(*args)
+        return completed_runs[args]
 
-
-            if value in ( args):
-                return completed_runs
-                print("Getting from cache")
-            else:
-                return func(completed_runs)
-                print("Calculating new result")
-
-        return func(args, kwargs)
     return wrapper
