@@ -6,13 +6,16 @@ def cache(func: Callable) -> Callable:
     cache_dict = {}
 
     @wraps(func)
-    def wrapper(*args) -> Any:
-        if args in cache_dict:
+    def wrapper(*args, **kwargs) -> Any:
+
+        key = (args, frozenset(kwargs.items()))
+
+        if key in cache_dict:
             print("Getting from cache")
-            return cache_dict[args]
         else:
             print("Calculating new result")
-            cache_dict[args] = func(*args)
-            return cache_dict[args]
+            cache_dict[key] = func(*args, **kwargs)
+
+        return cache_dict[key]
 
     return wrapper
