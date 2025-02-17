@@ -7,12 +7,13 @@ def cache(func: Callable) -> Callable:
 
     @wraps(func)
     def inner(*args) -> Any:
-        if args in storage:
+        temp = tuple(args)
+        if temp in storage:
             print("Getting from cache")
         else:
             print("Calculating new result")
-            storage[args] = func(*args)
+            storage[temp] = func(*args)
 
-        return storage[args]
+        return storage[temp]
 
     return inner
