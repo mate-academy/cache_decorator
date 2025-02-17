@@ -7,13 +7,15 @@ def cache(func: Callable) -> Callable:
 
     def wrapper(*args) -> dict:
 
-        if (args) in completed_runs:
+        argumenty = (tuple(args))
+
+        if argumenty in completed_runs:
             print("Getting from cache")
-            return completed_runs[args]
+            return completed_runs[argumenty]
         else:
             print("Calculating new result")
-            completed_runs[args] = func(*args)
+            completed_runs[argumenty] = func(*args)
 
-        return completed_runs[args]
+        return completed_runs[argumenty]
 
     return wrapper
