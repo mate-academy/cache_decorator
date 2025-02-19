@@ -1,6 +1,8 @@
 from typing import Callable, Any
 
 cash_dict = {}
+
+
 def cache(func: Callable) -> Callable:
     def inner(*args) -> Any:
         if id(func) not in cash_dict:
