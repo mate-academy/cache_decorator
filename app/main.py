@@ -1,10 +1,10 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def cache(func: Callable) -> Callable:
     cache_storage = {}
 
-    def wrapper(*args, **kwargs) -> Callable:
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
 
         key = (args, frozenset(kwargs.items()))
 
