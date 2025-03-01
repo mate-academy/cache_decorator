@@ -1,9 +1,8 @@
+from contextlib import redirect_stdout
 import io
 import time
-
-from contextlib import redirect_stdout
-from app.main import cache
 import os
+from app.main import cache
 
 
 def test_cache_single_function():
